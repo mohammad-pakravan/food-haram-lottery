@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.utils import timezone
+from django.db.models import Q
 from datetime import timedelta
 from .models import Ticket
 import random
@@ -90,9 +91,7 @@ class LotteryService:
             full_name__isnull=False,
             national_id__isnull=False
         ).exclude(
-            full_name='',
-            national_id='',
-            status='cancelled'
+            Q(full_name='') | Q(national_id='') | Q(status='cancelled')
         ).order_by('-created_at').first()
         
         if previous_ticket:

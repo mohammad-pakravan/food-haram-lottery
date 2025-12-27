@@ -1,6 +1,7 @@
 # Generated manually
+# This migration is empty because national_id and full_name are already in 0001_initial
 
-from django.db import migrations, models
+from django.db import migrations
 
 
 class Migration(migrations.Migration):
@@ -10,15 +11,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='ticket',
-            name='national_id',
-            field=models.CharField(blank=True, help_text='کد ملی', max_length=10, null=True),
-        ),
-        migrations.AddField(
-            model_name='ticket',
-            name='full_name',
-            field=models.CharField(blank=True, help_text='نام و نام خانوادگی', max_length=200, null=True),
-        ),
+        # national_id and full_name are already defined in 0001_initial.py
+        # No operations needed here
     ]
 

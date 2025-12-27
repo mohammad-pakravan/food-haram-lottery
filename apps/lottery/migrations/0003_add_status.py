@@ -1,6 +1,7 @@
 # Generated manually
+# This migration is empty because status is already in 0001_initial
 
-from django.db import migrations, models
+from django.db import migrations
 
 
 class Migration(migrations.Migration):
@@ -10,26 +11,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='ticket',
-            name='status',
-            field=models.CharField(
-                choices=[
-                    ('pending', 'در انتظار'),
-                    ('active', 'فعال'),
-                    ('won', 'برنده'),
-                    ('expired', 'منقضی شده'),
-                    ('cancelled', 'لغو شده'),
-                ],
-                db_index=True,
-                default='pending',
-                help_text='وضعیت تیکت',
-                max_length=20
-            ),
-        ),
-        migrations.AddIndex(
-            model_name='ticket',
-            index=models.Index(fields=['status'], name='lottery_tic_status_idx'),
-        ),
+        # status field is already defined in 0001_initial.py
+        # No operations needed here
     ]
 
