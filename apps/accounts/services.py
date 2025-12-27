@@ -140,11 +140,6 @@ class KavehNegarService:
             'token': otp_code
         }
         
-        # Debug logging
-        if settings.DEBUG:
-            print(f"KavehNegar request - URL: {url}")
-            print(f"KavehNegar request - Data: template={template}, receptor={phone_number}, token={otp_code[:2]}**")
-        
         try:
             response = requests.post(url, data=data, timeout=10)
             
@@ -162,10 +157,6 @@ class KavehNegarService:
             
             result = response.json()
             
-            # Debug logging
-            if settings.DEBUG:
-                print(f"KavehNegar response: {result}")
-            
             # KavehNegar API response structure:
             # {
             #   "return": {
@@ -177,13 +168,9 @@ class KavehNegarService:
             return_status = result.get('return', {}).get('status')
             
             if return_status == 200:
-                if settings.DEBUG:
-                    print("KavehNegar SMS sent successfully")
                 return True
             else:
                 error_message = result.get('return', {}).get('message', 'Unknown error')
-                if settings.DEBUG:
-                    print(f"KavehNegar API error: status={return_status}, message={error_message}")
                 raise Exception(f"KavehNegar API error: {error_message}")
                 
         except requests.exceptions.RequestException as e:

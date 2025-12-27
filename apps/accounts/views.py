@@ -144,24 +144,14 @@ class RequestOTPView(APIView):
             # Generate and create OTP
             otp_code, otp_instance = OTPService.create_otp(phone_number, purpose)
             
-            # In DEBUG mode, print OTP code to console for testing
-            if settings.DEBUG:
-                print("=" * 50)
-                print(f"🔐 OTP CODE FOR TESTING")
-                print(f"Phone Number: {phone_number}")
-                print(f"Purpose: {purpose}")
-                print(f"OTP Code: {otp_code}")
-                print(f"Expires at: {otp_instance.expires_at}")
-                print("=" * 50)
-            
             # Send OTP via SMS
             try:
                 KavehNegarService.send_otp(phone_number, otp_code)
             except Exception as e:
-                # Log error for debugging
-                import traceback
-                print(f"KavehNegar error: {str(e)}")
+                # Log error only in DEBUG mode
                 if settings.DEBUG:
+                    import traceback
+                    print(f"KavehNegar error: {str(e)}")
                     print(traceback.format_exc())
                 return Response(
                     {
@@ -187,10 +177,11 @@ class RequestOTPView(APIView):
                 status=status.HTTP_429_TOO_MANY_REQUESTS
             )
         except Exception as e:
-            import traceback
-            # Log the full error for debugging
-            print(f"Error in RequestOTPView: {str(e)}")
-            print(traceback.format_exc())
+            # Log error only in DEBUG mode
+            if settings.DEBUG:
+                import traceback
+                print(f"Error in RequestOTPView: {str(e)}")
+                print(traceback.format_exc())
             return Response(
                 {'error': 'An error occurred. Please try again later.', 'detail': str(e) if settings.DEBUG else None},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR

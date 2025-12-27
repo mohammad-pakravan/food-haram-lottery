@@ -19,6 +19,8 @@ INSTALLED_APPS = [
     
     # Local apps (must be before admin for custom User model)
     'apps.accounts',
+    'apps.lottery.apps.LotteryConfig',
+    'django_apscheduler',  # For scheduled tasks
     
     'django.contrib.admin',
     'django.contrib.sessions',
@@ -159,6 +161,15 @@ OTP_CODE_LENGTH = int(os.getenv('OTP_CODE_LENGTH', '6'))
 OTP_EXPIRY_MINUTES = int(os.getenv('OTP_EXPIRY_MINUTES', '5'))
 OTP_RATE_LIMIT_COUNT = int(os.getenv('OTP_RATE_LIMIT_COUNT', '3'))
 OTP_RATE_LIMIT_MINUTES = int(os.getenv('OTP_RATE_LIMIT_MINUTES', '10'))
+
+# Lottery Settings
+LOTTERY_WINNERS_COUNT = int(os.getenv('LOTTERY_WINNERS_COUNT', '8'))
+LOTTERY_WINNER_SMS_TEMPLATE = os.getenv('LOTTERY_WINNER_SMS_TEMPLATE', '')
+ENABLE_LOTTERY_SCHEDULER = os.getenv('ENABLE_LOTTERY_SCHEDULER', 'False') == 'True'
+
+# APScheduler Settings
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
 
 # Swagger/OpenAPI Settings
 SWAGGER_SETTINGS = {
