@@ -25,3 +25,4 @@ class LotteryConfig(AppConfig):
                 logger = logging.getLogger(__name__)
                 logger.error(f"Failed to start lottery scheduler: {str(e)}")
 
+

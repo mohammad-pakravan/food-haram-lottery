@@ -56,3 +56,4 @@ def run_lottery_manual(request):
     
     return redirect('admin:lottery_ticket_changelist')
 
+

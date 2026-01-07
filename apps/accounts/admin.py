@@ -5,13 +5,14 @@ from .models import User, OTPCode
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    list_display = ('phone_number', 'is_phone_verified', 'is_active', 'is_staff', 'created_at')
+    list_display = ('phone_number', 'national_id', 'is_phone_verified', 'is_active', 'is_staff', 'created_at')
     list_filter = ('is_phone_verified', 'is_active', 'is_staff', 'created_at')
-    search_fields = ('phone_number',)
+    search_fields = ('phone_number', 'national_id')
     ordering = ('-created_at',)
     
     fieldsets = (
         (None, {'fields': ('phone_number', 'password')}),
+        ('Personal Info', {'fields': ('national_id',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Status', {'fields': ('is_phone_verified',)}),
         ('Important dates', {'fields': ('last_login', 'date_joined', 'created_at', 'updated_at')}),

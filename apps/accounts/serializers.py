@@ -73,8 +73,19 @@ class UserProfileSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['id', 'phone_number', 'is_phone_verified', 'created_at', 'updated_at']
+        fields = ['id', 'phone_number', 'national_id', 'is_phone_verified', 'created_at', 'updated_at']
         read_only_fields = ['id', 'phone_number', 'is_phone_verified', 'created_at', 'updated_at']
+    
+    def validate_national_id(self, value):
+        """
+        Validate national ID format (10 digits)
+        """
+        if value:
+            if not value.isdigit():
+                raise serializers.ValidationError("کد ملی باید فقط شامل اعداد باشد")
+            if len(value) != 10:
+                raise serializers.ValidationError("کد ملی باید دقیقاً 10 رقم باشد")
+        return value
 
 
 class TokenResponseSerializer(serializers.Serializer):

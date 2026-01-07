@@ -54,6 +54,14 @@ class User(AbstractUser):
         default=False,
         help_text="Whether the phone number has been verified"
     )
+    national_id = models.CharField(
+        max_length=10,
+        null=True,
+        blank=True,
+        unique=True,
+        db_index=True,
+        help_text="کد ملی کاربر"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
@@ -69,6 +77,7 @@ class User(AbstractUser):
         indexes = [
             models.Index(fields=['phone_number']),
             models.Index(fields=['created_at']),
+            models.Index(fields=['national_id']),
         ]
     
     def __str__(self):
